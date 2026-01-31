@@ -55,7 +55,7 @@ void loop() {
 void handle_J1X(int value) {
   String direction;
 
-  if (value > 530) {  // Zone morte autour de 512
+  if (value > 530) {
     if (value > 990) {
       direction = "L4";
     } else if (value > 880) {
@@ -65,7 +65,7 @@ void handle_J1X(int value) {
     } else {
       direction = "L1";
     }
-  } else if (value < 490) {  // Zone morte autour de 512
+  } else if (value < 490) {
     if (value < 100) {
       direction = "R4";
     } else if (value < 200) {
@@ -76,10 +76,10 @@ void handle_J1X(int value) {
       direction = "R1";
     }
   } else {
-    direction = "RL";  // Position neutre
+    direction = "RL";  //neutre
   }
 
-  char message[5];  // Assez grand pour contenir les valeurs les plus longues + '\0'
+  char message[5];
   strcpy(message, direction.c_str());
 
   radio.send(ID_RECEPTEUR, &message, sizeof(message));
@@ -109,11 +109,10 @@ void handle_J1Y(int value) {
     height = "D4";
   }
 
-  // Vérification si X2 (joystick 2 horizontal) est dans la zone neutre
+
   int x2Value = analogRead(X2);
   bool x2IsNeutral = x2Value >= 490 && x2Value <= 530;
 
-  // Si la valeur calculée est "DM" mais que X2 n'est pas neutre, on ne l'envoie pas
   if (height == "DM" && !x2IsNeutral) {
     return;
   }
@@ -129,7 +128,7 @@ void handle_J1Y(int value) {
 void handle_J2X(int value) {
   String direction;
 
-  if (value > 530) {  // Zone morte autour de 512
+  if (value > 530) { 
     if (value > 990) {
       direction = "LA4";
     } else if (value > 880) {
@@ -139,7 +138,7 @@ void handle_J2X(int value) {
     } else {
       direction = "LA1";
     }
-  } else if (value < 490) {  // Zone morte autour de 512
+  } else if (value < 490) {
     if (value < 100) {
       direction = "RA4";
     } else if (value < 200) {
@@ -150,10 +149,10 @@ void handle_J2X(int value) {
       direction = "RA1";
     }
   } else {
-    direction = "RAL";  // Position neutre
+    direction = "RAL";
   }
 
-  char message[5];  // Assez grand pour contenir les valeurs les plus longues + '\0'
+  char message[5];
   strcpy(message, direction.c_str());
 
   radio.send(ID_RECEPTEUR, &message, sizeof(message));
@@ -192,7 +191,7 @@ void handle_J2Y(int value) {
     m = "gaz13";
   }
 
-  char message[5];  // Assez grand pour contenir les valeurs les plus longues + '\0'
+  char message[5];
   strcpy(message, m.c_str());
 
   radio.send(ID_RECEPTEUR, &message, sizeof(message));
