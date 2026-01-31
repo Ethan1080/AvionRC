@@ -5,6 +5,12 @@ Construction d'un avion radio-commandé fonctionnel
   - Avec de la soudure electronique
   - Avec de la modelisation et de l'impression 3D
 
+# Programmation
+
+La carte mere et la télécommande ont étés programmés en C++, le langage natif des cartes Arduino
+
+[Code avion](src/avionV5/avionV5.ino)
+[Code manette](src/manetteV3/manetteV3.ino)
 
 # Construction de la carte mère
 
