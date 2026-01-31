@@ -29,3 +29,4 @@ La manette a été construite a partir de la télécommande d'un avion qui a ét
   <img src="images/manette2.jpg" width="200">
 </p>
 
+# Modelisation et impression 3D
