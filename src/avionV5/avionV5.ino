@@ -4,7 +4,7 @@
 
 NRFLite _radio;
 
-const static uint8_t RADIO_ID = 0;   //  identique à ton ancien code qui marche
+const static uint8_t RADIO_ID = 0;
 const static uint8_t DESTINATION_RADIO_ID = 1;
 
 const static uint8_t PIN_CE = 9;
@@ -14,13 +14,11 @@ Servo empennage;
 Servo derive;
 Servo esc_motor;
 
-// === Position neutre des servos ===
 int pos_neutre_derive = 90;
 int pos_neutre_empennage = 90;
 
-// === Limites de mouvement ===
-int max_derive = 30;     // amplitude max pour ailerons
-int max_empennage = 25;   // amplitude max pour gouvernail
+int max_derive = 30;
+int max_empennage = 25;
 
 unsigned long dernierMessageRecu = 0;
 
@@ -34,10 +32,10 @@ struct PayloadStruct {
 void setup() {
   Serial.begin(9600);
   if (!_radio.init(RADIO_ID, PIN_CE, PIN_CSN)) {
-    Serial.println("Impossible d'initialiser la radio !");
+    Serial.println("Erreur radio");
     while (1);
   }
-  Serial.println("Connexion établie !");
+  Serial.println("OK");
 
   derive.attach(2);
   empennage.attach(3);
@@ -53,12 +51,12 @@ void setup() {
 }
 
 void controlAvion(String instruction) {
-  instruction.trim(); // Enlever espaces parasites
+  instruction.trim()
 
   if (instruction.startsWith("gaz")) { // ===== GAZ =====
-    int niveau = instruction.substring(3).toInt(); // Ex: "gaz7"  7
+    int niveau = instruction.substring(3).toInt();
     niveau = constrain(niveau, 0, 13);
-    int esc_val = map(niveau, 0, 13, 1000, 1500); // Signal ESC
+    int esc_val = map(niveau, 0, 13, 1000, 1500);
     esc_motor.writeMicroseconds(esc_val);
     Serial.print("Gaz : ");
     Serial.println(niveau);
@@ -70,8 +68,8 @@ void controlAvion(String instruction) {
     Serial.print("droite force ");
     Serial.println(force);
     return;
-  }else if (instruction.startsWith("L")) { // ===== TOURNER À GAUCHE =====
-    int force = instruction.substring(1).toInt(); // Ex: L2  2
+  }else if (instruction.startsWith("L")) { // ===== TOURNER A GAUCHE =====
+    int force = instruction.substring(1).toInt();
     force = constrain(force, 1, 4);
     derive.write(pos_neutre_derive - force * (max_derive / 4));
     Serial.print("gauche force ");
@@ -108,7 +106,6 @@ void loop() {
 
   if (_radio.hasData()) {
     _radio.readData(&payload);
-    //Serial.println(payload.message);
     dernierMessageRecu = millis();
     String messageRecu = String(payload.message);
     controlAvion(messageRecu);
