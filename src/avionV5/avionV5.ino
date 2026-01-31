@@ -53,7 +53,7 @@ void setup() {
 void controlAvion(String instruction) {
   instruction.trim()
 
-  if (instruction.startsWith("gaz")) { // ===== GAZ =====
+  if (instruction.startsWith("gaz")) { //gaz
     int niveau = instruction.substring(3).toInt();
     niveau = constrain(niveau, 0, 13);
     int esc_val = map(niveau, 0, 13, 1000, 1500);
@@ -61,32 +61,32 @@ void controlAvion(String instruction) {
     Serial.print("Gaz : ");
     Serial.println(niveau);
     return;
-  }else if (instruction.startsWith("R") && instruction != "RL" && instruction != "RAL") { // ===== TOURNER À DROITE =====
-    int force = instruction.substring(1).toInt(); // Ex: R3  3
+  }else if (instruction.startsWith("R") && instruction != "RL" && instruction != "RAL") { //droite
+    int force = instruction.substring(1).toInt();
     force = constrain(force, 1, 4);
     derive.write(pos_neutre_derive + force * (max_derive / 4));
     Serial.print("droite force ");
     Serial.println(force);
     return;
-  }else if (instruction.startsWith("L")) { // ===== TOURNER A GAUCHE =====
+  }else if (instruction.startsWith("L")) { //gauche
     int force = instruction.substring(1).toInt();
     force = constrain(force, 1, 4);
     derive.write(pos_neutre_derive - force * (max_derive / 4));
     Serial.print("gauche force ");
     Serial.println(force);
     return;
-  }else if (instruction == "RL") { // ===== TOUT DROIT =====
+  }else if (instruction == "RL") { //tout droit
     derive.write(pos_neutre_derive);
     Serial.println("RL neutre");
     return;
-  }else if (instruction.startsWith("M")) { // ===== MONTER =====
-    int force = instruction.substring(1).toInt(); // Ex: M3 → 3
+  }else if (instruction.startsWith("M")) { //monter
+    int force = instruction.substring(1).toInt();
     force = constrain(force, 1, 4);
     empennage.write(pos_neutre_empennage + force * (max_empennage / 4));
     Serial.print("Monte force ");
     Serial.println(force);
     return;
-  }else if (instruction.startsWith("D")) { // ===== DESCENDRE =====
+  }else if (instruction.startsWith("D")) { //descendre
     if (instruction == "DM") {
       empennage.write(pos_neutre_empennage);
       Serial.println("DM neutre");
