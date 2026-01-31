@@ -18,5 +18,8 @@ Des emplacements sont prevus sur la carte mère afin d'y brancher max 3 Servo-mo
 
 La manette a été construite a partir de la télécommande d'un avion qui a été perdu, elle a donc été modifié et amélioré afin de la faire fonctionner avec la carte mère. Elle est équipé des mêmes composants que l'avion: une arduino nano et un NRF24L01.
 
-<img src="images/manette1.jpg" width="200">
-<img src="images/manette2.jpg" width="200">
+<p align="center">
+  <img src="images/manette1.jpg" width="200">
+  <img src="images/manette2.jpg" width="200">
+</p>
+
