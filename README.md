@@ -10,4 +10,5 @@ Construction d'un avion radio-commandé fonctionnel
 
 La carte mère est construite sur une plaque de soudure electronique. Le cerveau de la carte mère est une arduino nano équipée d'un microprocesseur ATMEGA328, suffisant largement pour la conception d'un ordinateur de bord.
 
-![TEST](images/carte_mere.jpg)
+<img src="images/carte_mere.jpg" width="400">
+
