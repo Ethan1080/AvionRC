@@ -7,7 +7,7 @@ Construction d'un avion radio-commandé fonctionnel
 
 # Programmation
 
-La carte mere et la télécommande ont étés programmés en C++, le langage natif des cartes Arduino
+La carte mere et la télécommande ont été programmés en C++, le langage natif des cartes Arduino
 
 [Code avion](src/avionV5/avionV5.ino)
 [Code manette](src/manetteV3/manetteV3.ino)
