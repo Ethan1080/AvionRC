@@ -51,7 +51,7 @@ void setup() {
 }
 
 void controlAvion(String instruction) {
-  instruction.trim()
+  instruction.trim();
 
   if (instruction.startsWith("gaz")) { //gaz
     int niveau = instruction.substring(3).toInt();
@@ -112,6 +112,7 @@ void loop() {
   }
 
   if (millis() - dernierMessageRecu > 250) {
+    esc_motor.writeMicroseconds(0);
     Serial.println("perte de singal!!");
     delay(300);
   } else {
