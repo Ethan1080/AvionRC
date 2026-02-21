@@ -113,6 +113,9 @@ void loop() {
 
   if (millis() - dernierMessageRecu > 250) {
     esc_motor.writeMicroseconds(0);
+    empennage.write(pos_neutre_empennage);
+    derive.write(pos_neutre_derive);
+
     Serial.println("perte de singal!!");
     delay(300);
   } else {
