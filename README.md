@@ -19,6 +19,10 @@ La carte mère est construite sur une plaque de soudure électronique. Le cervea
 <img src="images/carte_mere.jpg" width="400">
 
 Des emplacements sont prevus sur la carte mère afin d'y brancher max 3 Servo-moteurs
+Plus tard j'ai realisé une deuxieme version de la carte mère, plus compact, mieux travaillée et donc plus fiable.
+
+<img src="images/carte_mereV2.jpg" width="400">
+
 
 # Construction de la manette
 
@@ -31,5 +35,16 @@ La manette a été construite a partir de la télécommande d'un avion qui a ét
 
 # Modelisation et impression 3D
 
+J'ai modelisé l'avion entierement sur tinkercad, avec des formes geometriques simples (cylindre, cubes...) pour que le model soit simple et efficace, mais pas forcement tres ésthetique.
 
-en cours...
+<p>
+  <img src="images/modelisation1.jpg" width="200">
+  <img src="images/modelisation2.jpg" width="200">
+</p>
+
+L'impression 3D a été réalisé avec du filament LW-PLA, qui est un filament pla standart mais qui possède des propriétées expensibles quand on lui applique une forte chaleur (environ 240°C). J'ai rencontré beaucoup de difficultés a reussir a avoir ma première impression avec ce filament car je n'avais pas encore trouvé les bon parametre pour assurer une bonne adhesion de la premiere couche.
+
+<p>
+  <img src="images/impressionEnCour.jpg" width="200">
+  <img src="images/premierAssemblage.jpg" width="200">
+</p>
