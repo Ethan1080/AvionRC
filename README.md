@@ -45,6 +45,6 @@ J'ai modelisé l'avion entierement sur tinkercad, avec des formes geometriques s
 L'impression 3D a été réalisé avec du filament LW-PLA, qui est un filament pla standart mais qui possède des propriétées expensibles quand on lui applique une forte chaleur (environ 240°C). J'ai rencontré beaucoup de difficultés a reussir a avoir ma première impression avec ce filament car je n'avais pas encore trouvé les bon parametre pour assurer une bonne adhesion de la premiere couche.
 
 <p>
-  <img src="images/impressionEnCour.jpg" width="200">
-  <img src="images/premierAssemblage.jpg" width="200">
+  <img src="images/impression1.jpg" width="200">
+  <img src="images/impression2.jpg" width="200">
 </p>
