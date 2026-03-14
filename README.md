@@ -16,12 +16,12 @@ La carte mere et la télécommande ont été programmés en C++, le langage nati
 
 La carte mère est construite sur une plaque de soudure électronique. Le cerveau de la carte mère est une Arduino Nano équipée d'un microprocesseur ATMEGA328, amplement suffisant pour la conception d'un ordinateur de bord. Le module radio est un NRF24L01 avec antenne, dont la portée peut aller jusqu’à 1 km.
 
-<img src="images/carte_mere.jpg" width="400">
+<img src="images/carte_mere.jpg" width="200">
 
 Des emplacements sont prevus sur la carte mère afin d'y brancher max 3 Servo-moteurs
 Plus tard j'ai realisé une deuxieme version de la carte mère, plus compact, mieux travaillée et donc plus fiable.
 
-<img src="images/carte_mereV2.jpg" width="400">
+<img src="images/carte_mereV2.jpg" width="200">
 
 
 # Construction de la manette
