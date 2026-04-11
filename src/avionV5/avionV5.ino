@@ -6,19 +6,30 @@ NRFLite _radio;
 
 const static uint8_t RADIO_ID = 0;
 const static uint8_t DESTINATION_RADIO_ID = 1;
+const static uint8_t ID_RECEPTEUR = 0;
+#define ID_EMETTEUR 0
 
 const static uint8_t PIN_CE = 9;
 const static uint8_t PIN_CSN = 10;
 
 Servo empennage;
-Servo derive;
+Servo pal_droite;
+Servo pal_gauche;
 Servo esc_motor;
 
-int pos_neutre_derive = 90;
-int pos_neutre_empennage = 90;
+int pos_neutre_empennage = 60;
 
-int max_derive = 30;
-int max_empennage = 25;
+int pos_neutre_pal_gauche = 70;
+int pos_neutre_pal_droite = 65;
+
+int amplitude_pal_up = 30;
+int amplitude_pal_down = 30;
+
+int amplitude_empennage_up = 45;
+int amplitude_empennage_down = 55;
+
+int angle_min = pos_neutre_empennage - amplitude_empennage_down;
+int angle_max = pos_neutre_empennage + amplitude_empennage_up;
 
 unsigned long dernierMessageRecu = 0;
 
@@ -26,7 +37,8 @@ String _radioData;
 String dernierMessage = "";
 
 struct PayloadStruct {
-  char message[32];
+  char type;    // 'X', 'Y', 'A' ou 'G'
+  int valeur;   // Le chiffre précis (ex: -100 à 100)
 };
 
 void setup() {
@@ -37,88 +49,85 @@ void setup() {
   }
   Serial.println("OK");
 
-  derive.attach(2);
-  empennage.attach(3);
+  pal_droite.attach(2);
+  pal_gauche.attach(3);
+  empennage.attach(4);
 
   esc_motor.attach(5);
 
-  derive.write(pos_neutre_derive);
   empennage.write(pos_neutre_empennage);
+
+  pal_droite.write(pos_neutre_pal_droite);
+  pal_gauche.write(pos_neutre_pal_gauche);
 
   esc_motor.write(1000);
 
   delay(2000);
 }
 
-void controlAvion(String instruction) {
-  instruction.trim();
 
-  if (instruction.startsWith("gaz")) { //gaz
-    int niveau = instruction.substring(3).toInt();
-    niveau = constrain(niveau, 0, 13);
-    int esc_val = map(niveau, 0, 13, 1000, 1500);
-    esc_motor.writeMicroseconds(esc_val);
-    Serial.print("Gaz : ");
-    Serial.println(niveau);
-    return;
-  }else if (instruction.startsWith("R") && instruction != "RL" && instruction != "RAL") { //droite
-    int force = instruction.substring(1).toInt();
-    force = constrain(force, 1, 4);
-    derive.write(pos_neutre_derive + force * (max_derive / 4));
-    Serial.print("droite force ");
-    Serial.println(force);
-    return;
-  }else if (instruction.startsWith("L")) { //gauche
-    int force = instruction.substring(1).toInt();
-    force = constrain(force, 1, 4);
-    derive.write(pos_neutre_derive - force * (max_derive / 4));
-    Serial.print("gauche force ");
-    Serial.println(force);
-    return;
-  }else if (instruction == "RL") { //tout droit
-    derive.write(pos_neutre_derive);
-    Serial.println("RL neutre");
-    return;
-  }else if (instruction.startsWith("M")) { //monter
-    int force = instruction.substring(1).toInt();
-    force = constrain(force, 1, 4);
-    empennage.write(pos_neutre_empennage + force * (max_empennage / 4));
-    Serial.print("Monte force ");
-    Serial.println(force);
-    return;
-  }else if (instruction.startsWith("D")) { //descendre
-    if (instruction == "DM") {
+void controlAvion(PayloadStruct received) {
+  char type = received.type;
+  int val = received.valeur;
+  if(type == 'G'){
+    esc_motor.write(map(val, 0, 500, 1000, 1500));
+  }else if(type == 'P'){
+    if (val == 0){
       empennage.write(pos_neutre_empennage);
-      Serial.println("DM neutre");
-      return;
+    }else{
+      if (val > 0) {
+        int angle = map(val, 0, 100, pos_neutre_empennage, angle_min);
+        empennage.write(angle);
+      }else if (val < 0) {
+        int angle = map(val, 0, -100, pos_neutre_empennage, angle_max);
+        empennage.write(angle);
+      }else {
+        empennage.write(pos_neutre_empennage);
+      }
     }
-    int force = instruction.substring(1).toInt();
-    force = constrain(force, 1, 4);
-    empennage.write(pos_neutre_empennage - force * (max_empennage / 4));
-    Serial.print("Descend force ");
-    Serial.println(force);
-    return;
+  }else if(type == 'D'){
+    if (val == 0) {
+      pal_droite.write(pos_neutre_pal_droite);
+      pal_gauche.write(pos_neutre_pal_gauche);
+
+    } else if (val > 0) {
+      int angle_droite = map(val, 1, 100, pos_neutre_pal_droite, pos_neutre_pal_gauche + amplitude_pal_up);
+      int angle_gauche = map(val, 1, 100, pos_neutre_pal_gauche, pos_neutre_pal_gauche + amplitude_pal_up);
+
+      pal_droite.write(angle_droite);
+      pal_gauche.write(angle_gauche);
+
+    } else { // val < 0
+      int angle_droite = map(val, -1, -100, pos_neutre_pal_droite, pos_neutre_pal_droite - amplitude_pal_up);
+      int angle_gauche = map(val, -1, -100, pos_neutre_pal_gauche, pos_neutre_pal_gauche - amplitude_pal_up);
+
+      pal_droite.write(angle_droite);
+      pal_gauche.write(angle_gauche);
+    }
   }
 }
 
 void loop() {
+
   PayloadStruct payload;
 
   if (_radio.hasData()) {
     _radio.readData(&payload);
     dernierMessageRecu = millis();
-    String messageRecu = String(payload.message);
-    controlAvion(messageRecu);
+
+    controlAvion(payload);
   }
 
+  static unsigned long dernierPrint = 0;
+
   if (millis() - dernierMessageRecu > 250) {
+
     esc_motor.writeMicroseconds(0);
     empennage.write(pos_neutre_empennage);
-    derive.write(pos_neutre_derive);
 
-    Serial.println("perte de singal!!");
-    delay(300);
-  } else {
-    //signal OK
+    if (millis() - dernierPrint > 300) {
+      Serial.println("perte de signal!!");
+      dernierPrint = millis();
+    }
   }
 }
