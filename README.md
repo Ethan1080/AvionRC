@@ -3,7 +3,7 @@
 Construction d'un avion radio-commandé fonctionnel
   - Avec de la programmation en C++ 
   - Avec de la soudure electronique
-  - Avec de la modelisation et de l'impression 3D
+  - Avec des connaissances en aérodinamisme, et en fonctionnement global d'un avion moderne
 
 # Programmation
 
@@ -29,7 +29,12 @@ La manette a été construite a partir de la télécommande d'un avion qui a ét
   <img src="images/manette2.jpg" width="200">
 </p>
 
-# Modelisation et impression 3D
+# Impression 3D
 
+Pour l'impression 3D, j'ai utilisé mon imprimante Ender3 V3 SE, il s'agit d'une imprimante entrée de gamme mais qui fait largement le travail demandé pour ce projet, malgrès quelques complications au niveau de l'adhérence au plateau. Pour le filament j'ai utilisé le lw epla de eSun. Pour le model 3D j'ai decidé de ne pas reinventer la roue tout seul, j'ai donc pris le model A de chez elispon, qui est gratuit.
 
-en cour...
+# Résultat final
+
+Apres des années de réflexion et de travail, j'ai pu réaliser mon objectif, faire voler un avion dans les air en le gardant controlable.
+
+<img src="images/avion_final.jpg" width="400">
