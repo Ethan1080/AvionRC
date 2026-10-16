@@ -37,4 +37,4 @@ Pour l'impression 3D, j'ai utilisé mon imprimante Ender3 V3 SE, il s'agit d'une
 
 Apres des années de réflexion et de travail, j'ai pu réaliser mon objectif, faire voler un avion dans les air en le gardant controlable.
 
-<img src="images/avion_final.jpg" width="400">
+<img src="images/IMG_3970.jpeg" width="400">
