@@ -5,6 +5,8 @@ Construction d'un avion radio-commandé fonctionnel
   - Avec de la soudure electronique
   - Avec des connaissances en aérodinamisme, et en fonctionnement global d'un avion moderne
 
+En vu de la démocratisation recente des intelligences artificielles, je tiens à préciser qu'aucune IA n'est intervenu dans ce projet, j'ai appris, programmation modelisation 3D et soudure, à travers des forums ou des serveurs discord en communiquant avec des gens competents qui m'ont fournit l'aide dont j'avais besoin et que je remerci encore aujourd'hui.
+
 # Programmation
 
 La carte mere et la télécommande ont été programmés en C++, le langage natif des cartes Arduino
@@ -32,6 +34,7 @@ La manette a été construite a partir de la télécommande d'un avion qui a ét
 # Impression 3D
 
 Pour l'impression 3D, j'ai utilisé mon imprimante Ender3 V3 SE, il s'agit d'une imprimante entrée de gamme mais qui fait largement le travail demandé pour ce projet, malgrès quelques complications au niveau de l'adhérence au plateau. Pour le filament j'ai utilisé le lw epla de eSun. Pour le model 3D j'ai decidé de ne pas reinventer la roue tout seul, j'ai donc pris le model A de chez elispon, qui est gratuit.
+Pour le model 3D je me siis fortement aidé de l'avion gratuit de chez Elipson, j'ai fait des modifications pour adapter le model a mon hardware.
 
 # Résultat final
 
