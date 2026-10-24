@@ -36,24 +36,38 @@ void setup() {
 
   if (!radio.init(ID_EMETTEUR, PIN_CE, PIN_CSN)) {
     Serial.println("Échec de l'initialisation !");
-    analogWrite(3, 127);
-    delay(100);
-    analogWrite(3, 0);
-    delay(100);
-    analogWrite(3, 127);
-    delay(100);
-    analogWrite(3, 0);
-    delay(100);
-    analogWrite(3, 127);
-    delay(100);
-    analogWrite(3, 0);
-    delay(100);
-    while (1)
-      ;
+    blink(200);
+    kill();
+  }
+  while(analogRead(Y2) <= 960){
+    Serial.print("Joystick gaz mal positionné ");
+    Serial.println(analogRead(A2));
+    blink(50);
   }
   Serial.print("ok");
   analogWrite(3, 127);
-}  
+}
+
+void blink(int speed){
+  analogWrite(3, 127);
+  delay(speed);
+  analogWrite(3, 0);
+  delay(speed);
+  analogWrite(3, 127);
+  delay(speed);
+  analogWrite(3, 0);
+  delay(speed);
+  analogWrite(3, 127);
+  delay(speed);
+  analogWrite(3, 0);
+  delay(speed);
+}
+
+void kill() {
+  while(true){
+    ;
+  }
+}
 
 void loop() {
 
@@ -65,6 +79,7 @@ void loop() {
     handle_J2Y(analogRead(Y2));
     handle_J1Y(analogRead(X1));
     handle_J2X(analogRead(Y1));
+    handle_J1X(analogRead(X2));
   }
 
   if (millis() - dernierMessageRecu > 350) {
@@ -84,7 +99,7 @@ void loop() {
 
 void handle_J2X(int value) {
   PayloadStruct payload;
-  payload.type = 'D'; // profondeur
+  payload.type = 'A'; // ailerons
   payload.valeur = map(value, 0, 1023, -100, 100);
   
   if (payload.valeur > -5 && payload.valeur < 5) payload.valeur = 0;
@@ -94,10 +109,23 @@ void handle_J2X(int value) {
   }
 }
 
+void handle_J1X(int value) {
+  PayloadStruct payload;
+  payload.type = 'D'; // dir
+  payload.valeur = map(value, 0, 1023, -100, 100);
+  
+  if (payload.valeur > -5 && payload.valeur < 5) payload.valeur = 0;
+
+  if(radio.send(ID_RECEPTEUR, &payload, sizeof(payload))){
+    dernierMessageRecu = millis();
+  }
+}
+
+
 void handle_J2Y(int value) {
   PayloadStruct payload;
   payload.type = 'G'; // gaz
-  payload.valeur = map(value, 0, 1023, 500, 0);
+  payload.valeur = map(value, 0, 980, 500, 0);
   
   if (payload.valeur > -5 && payload.valeur < 5) payload.valeur = 0;
 
